@@ -25,7 +25,7 @@ export function WhoseHome() {
       ];
     }
 
-    if (results.length === 0) {
+    if (results.filter((user) => user.status !== "OFFLINE").length === 0) {
       results = [
         {
           name: "unavailable",
@@ -50,13 +50,15 @@ export function WhoseHome() {
 
   return (
     <AvatarGroup className="justify-center m-5">
-      {whoseHome.map((user, idx) => (
-        <Avatar key={idx} size="sm">
-          <AvatarFallback
-            style={{ backgroundColor: `rgb${user.color}` }}
-          ></AvatarFallback>
-        </Avatar>
-      ))}
+      {whoseHome
+        .filter((user) => user.status !== "OFFLINE")
+        .map((user, idx) => (
+          <Avatar key={idx} size="sm">
+            <AvatarFallback
+              style={{ backgroundColor: `rgb${user.color}` }}
+            ></AvatarFallback>
+          </Avatar>
+        ))}
     </AvatarGroup>
   );
 }
