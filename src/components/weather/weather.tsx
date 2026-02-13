@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import WeatherDay from "./weather-day";
+import WeatherDay, { type Forecast } from "./weather-day";
 
 export default function Weather() {
   const [weather, setWeather] = useState<any>([]);
@@ -38,7 +38,7 @@ export default function Weather() {
   return (
     <div>
       <div className="flex">
-        {weather?.forecast?.forecastday?.map((forecast: any) => (
+        {weather?.forecast?.forecastday?.map((forecast: Forecast) => (
           <WeatherDay
             key={forecast.date}
             forecast={forecast}

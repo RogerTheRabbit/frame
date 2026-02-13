@@ -1,5 +1,18 @@
+import { WeatherIconMap } from "./weathermapping";
+
+export type Forecast = {
+  date: string;
+  day: {
+    maxtemp_c: number;
+    mintemp_c: number;
+    condition: {
+      code: keyof typeof WeatherIconMap;
+    };
+  };
+};
+
 type Props = {
-  forecast: any;
+  forecast: Forecast;
   forecastMaxTemp: number;
   forecastMinTemp: number;
 };
@@ -19,23 +32,23 @@ export default function WeatherDay(props: Props) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h3 className="text-sm text-muted-foreground leading-none font-medium text-center">
+      <h3 className="text-md text-muted-foreground leading-none font-medium text-center">
         {weekday[new Date(props.forecast?.date).getUTCDay()]}
       </h3>
       <img
-        className="w-10 my-3"
-        src={`https:${props.forecast?.day?.condition?.icon}`}
+        className="w-10 my-4 mx-2"
+        src={WeatherIconMap[props.forecast.day.condition.code]}
       />
-      <h3 className="text-sm leading-none font-medium text-center">
+      <h3 className="text-lg leading-none font-medium text-center">
         {Math.round(maxTemp)}°
       </h3>
-      <div className="h-20 w-full relative m-3">
+      <div className="h-30 w-full relative m-3">
         <div
-          className={`absolute left-1/2 -translate-x-1/2 w-5 rounded-full bg-gradient-to-b from-neutral-300 to-neutral-500`}
+          className={`absolute left-1/2 -translate-x-1/2 w-6 rounded-full bg-gradient-to-b from-neutral-300 to-neutral-500`}
           style={{ top: `${topPercentage}%`, bottom: `${botPercentage}%` }}
         />
       </div>
-      <h3 className="text-sm leading-none font-medium text-center">
+      <h3 className="text-lg leading-none font-medium text-center">
         {Math.round(minTemp)}°
       </h3>
     </div>
