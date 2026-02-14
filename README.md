@@ -1,3 +1,5 @@
-# React + TypeScript + Vite + shadcn/ui
+# Frame
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+Picture frame which shows various info + pictures!
+
+Built using React + TypeScript + Vite + shadcn/ui
