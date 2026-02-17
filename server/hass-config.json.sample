@@ -1,0 +1,6 @@
+{
+  "light_entities": [
+    "light.my_light_entitiy1",
+    "light.my_light_entitiy2"
+  ]
+}
