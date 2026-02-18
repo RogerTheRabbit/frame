@@ -46,10 +46,17 @@ export default function HomeAssistant() {
       .then((resp) => resp.json())
       .then((respConfig) => {
         setConfig(respConfig);
+      })
+      .catch((err) => {
+        console.log("Failed/parse to fetch hass config:", err);
       });
   }, [ws]);
 
   useEffect(() => {
+    if (!config) {
+      return;
+    }
+
     let unsubscribe = ws?.subscribeMessage(
       (msg) => {
         // Presumably 'a' for 'all'
@@ -84,8 +91,6 @@ export default function HomeAssistant() {
     };
   }, [config]);
 
-  console.log("entities", entities);
-
   return (
     <div className="absolute top-0 right-0 p-3">
       {entities &&
@@ -93,9 +98,8 @@ export default function HomeAssistant() {
           return (
             <Button
               key={idx}
-              size="icon-lg"
-              variant="outline"
-              className="ml-2"
+              variant="secondary"
+              className="ml-2 w-20 h-20"
               onClick={() => {
                 ws?.sendMessage({
                   id: 20,
