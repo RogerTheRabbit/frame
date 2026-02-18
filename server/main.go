@@ -6,12 +6,28 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	// Note: .env does not override system env vars
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Println("No .env file, defaulting to server env var", err)
+	}
+	log.Println("Allowed Origins:", os.Getenv("FRAME_SERVER_ALLOWED_ORIGINS"))
+
 	router := gin.Default()
+	router.SetTrustedProxies(nil)
+	config := cors.DefaultConfig()
+	config.AllowOrigins = strings.Split(os.Getenv("FRAME_SERVER_ALLOWED_ORIGINS"), ",")
+	router.Use(cors.New(config))
+
 	router.GET("/enable", getEnableScreen)
 	router.GET("/disable", getDisableScreen)
 
