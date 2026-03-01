@@ -1,5 +1,6 @@
 import { Clock } from "./components/clock";
 import { Container } from "./components/container";
+import HomeAssistant from "./components/home-assistant/home-assistant";
 import { ThemeProvider } from "./components/theme-provider";
 import Weather from "./components/weather/weather";
 import { WhoseHome } from "./components/whosehome";
@@ -16,6 +17,7 @@ export function App() {
           <Weather />
         </div>
       </Container>
+      <HomeAssistant />
     </ThemeProvider>
   );
 }

@@ -6,7 +6,7 @@ export default function Weather() {
 
   const fetchWeather = async () => {
     const resp = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${import.meta.env.VITE_WEATHER_LOCATION}&days=3&aqi=no&alerts=yes`,
+      `https://api.weatherapi.com/v1/forecast.json?q=${import.meta.env.VITE_WEATHER_LOCATION}&days=3&aqi=no&alerts=yes&key=${import.meta.env.VITE_WEATHER_API_KEY}`,
     );
     const data = await resp.json();
     setWeather(data);
