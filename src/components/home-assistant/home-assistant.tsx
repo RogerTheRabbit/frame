@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LightbulbIcon, LightbulbOffIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,11 +11,16 @@ import {
 } from "home-assistant-js-websocket";
 import { usePersistentState } from "@/lib/usePersistentState";
 
+// Define types for Home Assistant config
+interface HassConfig {
+  light_entities: string[];
+}
+
 export default function HomeAssistant() {
-  const [authTest, setAuth] = usePersistentState<Auth>("auth", null);
-  const [ws, setWs] = useState<Connection>();
-  const [entities, setEntities] = useState<{}>();
-  const [config, setConfig] = useState();
+  const [authTest, setAuth] = usePersistentState<Auth | null>("auth", null);
+  const [ws, setWs] = useState<Connection | null>(null);
+  const [entities, setEntities] = useState<Record<string, string> | null>(null);
+  const [config, setConfig] = useState<HassConfig | null>(null);
 
   useEffect(() => {
     getAuth({
@@ -53,24 +58,24 @@ export default function HomeAssistant() {
   }, [ws]);
 
   useEffect(() => {
-    if (!config) {
+    if (!config || !ws) {
       return;
     }
 
-    let unsubscribe = ws?.subscribeMessage(
-      (msg) => {
+    let unsubscribe = ws.subscribeMessage(
+      (msg: any) => {
         // Presumably 'a' for 'all'
         if (msg["a"]) {
-          let updatedEntities = {};
-          Object.entries(msg["a"]).forEach(([key, val]) => {
+          let updatedEntities: Record<string, string> = {};
+          Object.entries(msg["a"]).forEach(([key, val]: any) => {
             updatedEntities[key] = val["s"];
           });
           setEntities(updatedEntities);
         }
         // Presumably 'c' for 'change'
         else if (msg["c"]) {
-          let updatedEntities = {};
-          Object.entries(msg["c"]).forEach(([key, val]) => {
+          let updatedEntities: Record<string, string> = {};
+          Object.entries(msg["c"]).forEach(([key, val]: any) => {
             updatedEntities[key] = val["+"]["s"];
           });
           setEntities((previousState) => ({
@@ -86,15 +91,15 @@ export default function HomeAssistant() {
       },
     );
 
-    return async () => {
-      unsubscribe?.then((unsubscribeFunc) => unsubscribeFunc());
+    return () => {
+      unsubscribe.then((unsubscribeFunc) => unsubscribeFunc());
     };
   }, [config]);
 
   return (
     <div className="absolute top-0 right-0 p-3">
       {entities &&
-        config?.light_entities.map((lightEntitiyId, idx) => {
+        config?.light_entities.map((lightEntityId, idx) => {
           return (
             <Button
               key={idx}
@@ -104,16 +109,16 @@ export default function HomeAssistant() {
                 ws?.sendMessage({
                   id: 20,
                   type: "call_service",
-                  domain: lightEntitiyId.split(".")[0],
+                  domain: lightEntityId.split(".")[0],
                   service: "toggle",
                   target: {
-                    entity_id: lightEntitiyId,
+                    entity_id: lightEntityId,
                   },
                 });
               }}
               disabled={!ws}
             >
-              {entities[lightEntitiyId] === "on" ? (
+              {entities[lightEntityId] === "on" ? (
                 <LightbulbIcon />
               ) : (
                 <LightbulbOffIcon />
