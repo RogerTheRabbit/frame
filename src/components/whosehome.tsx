@@ -46,7 +46,7 @@ export function WhoseHome() {
     }, 5000);
 
     return () => {
-      interval;
+      clearInterval(interval);
     };
   }, []);
 

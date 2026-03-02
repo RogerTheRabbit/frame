@@ -20,7 +20,7 @@ export default function Weather() {
     }, 900000);
 
     return () => {
-      interval;
+      clearInterval(interval);
     };
   }, []);
 

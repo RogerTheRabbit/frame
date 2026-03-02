@@ -18,7 +18,7 @@ export function Clock() {
     }, 1000);
 
     return () => {
-      interval;
+      clearInterval(interval);
     };
   }, []);
 
