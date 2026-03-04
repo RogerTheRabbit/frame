@@ -2,5 +2,7 @@
   "light_entities": [
     "light.my_light_entitiy1",
     "light.my_light_entitiy2"
-  ]
+  ],
+  "temperature_sensor": "sensor.temperature",
+  "humidity_sensor": "sensor.humidity"
 }
