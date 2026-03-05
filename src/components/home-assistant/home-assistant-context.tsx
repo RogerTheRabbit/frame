@@ -17,6 +17,7 @@ type HassConfig = {
   temperature_sensor: string;
   humidity_sensor: string;
   phone_battery_level: string;
+  presence_sensor: string;
 };
 
 type HassContext = {
@@ -26,6 +27,7 @@ type HassContext = {
   humidity: StatisticChartValue[];
   temperature: StatisticChartValue[];
   batteryLevel: number | undefined;
+  present: boolean | null;
 };
 
 type StatisticChartValue = {
@@ -49,6 +51,7 @@ export default function HomeAssistantContextProvider(props: Props) {
   const [batteryLevel, setBatteryLevel] = useState<number | undefined>(
     undefined,
   );
+  const [present, setPresent] = useState<boolean | null>(null);
 
   useEffect(() => {
     getAuth({
@@ -81,7 +84,7 @@ export default function HomeAssistantContextProvider(props: Props) {
         setConfig(respConfig);
       })
       .catch((err) => {
-        console.log("Failed/parse to fetch hass config:", err);
+        console.error("Failed/parse to fetch hass config:", err);
       });
   }, [ws]);
 
@@ -141,6 +144,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           setBatteryLevel(
             parseInt(updatedEntities[config.phone_battery_level]),
           );
+          setPresent(updatedEntities[config.presence_sensor] === "on");
         }
         // Presumably 'c' for 'change'
         else if (msg["c"]) {
@@ -157,6 +161,9 @@ export default function HomeAssistantContextProvider(props: Props) {
               parseInt(updatedEntities[config.phone_battery_level]),
             );
           }
+          if (updatedEntities[config.presence_sensor]) {
+            setPresent(updatedEntities[config.presence_sensor] === "on");
+          }
         }
       },
       {
@@ -167,6 +174,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           config.humidity_sensor,
           config.temperature_sensor,
           config.phone_battery_level,
+          config.presence_sensor,
         ],
       },
     );
@@ -180,7 +188,15 @@ export default function HomeAssistantContextProvider(props: Props) {
   return (
     <HomeAssistantConfigContext value={config}>
       <HomeAssistantContext
-        value={{ ws, entities, config, humidity, temperature, batteryLevel }}
+        value={{
+          ws,
+          entities,
+          config,
+          humidity,
+          temperature,
+          batteryLevel,
+          present,
+        }}
       >
         {props.children}
       </HomeAssistantContext>
