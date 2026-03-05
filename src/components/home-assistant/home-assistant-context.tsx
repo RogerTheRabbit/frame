@@ -16,6 +16,7 @@ type HassConfig = {
   light_entities: string[];
   temperature_sensor: string;
   humidity_sensor: string;
+  phone_battery_level: string;
 };
 
 type HassContext = {
@@ -24,6 +25,7 @@ type HassContext = {
   config: HassConfig | null;
   humidity: StatisticChartValue[];
   temperature: StatisticChartValue[];
+  batteryLevel: number | undefined;
 };
 
 type StatisticChartValue = {
@@ -44,6 +46,9 @@ export default function HomeAssistantContextProvider(props: Props) {
   const [config, setConfig] = useState<HassConfig | null>(null);
   const [humidity, setHumidity] = useState<StatisticChartValue[]>([]);
   const [temperature, setTemperature] = useState<StatisticChartValue[]>([]);
+  const [batteryLevel, setBatteryLevel] = useState<number | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     getAuth({
@@ -133,6 +138,9 @@ export default function HomeAssistantContextProvider(props: Props) {
             updatedEntities[key] = val["s"];
           });
           setEntities(updatedEntities);
+          setBatteryLevel(
+            parseInt(updatedEntities[config.phone_battery_level]),
+          );
         }
         // Presumably 'c' for 'change'
         else if (msg["c"]) {
@@ -144,6 +152,11 @@ export default function HomeAssistantContextProvider(props: Props) {
             ...previousState,
             ...updatedEntities,
           }));
+          if (updatedEntities[config.phone_battery_level]) {
+            setBatteryLevel(
+              parseInt(updatedEntities[config.phone_battery_level]),
+            );
+          }
         }
       },
       {
@@ -153,6 +166,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           ...config.light_entities,
           config.humidity_sensor,
           config.temperature_sensor,
+          config.phone_battery_level,
         ],
       },
     );
@@ -166,7 +180,7 @@ export default function HomeAssistantContextProvider(props: Props) {
   return (
     <HomeAssistantConfigContext value={config}>
       <HomeAssistantContext
-        value={{ ws, entities, config, humidity, temperature }}
+        value={{ ws, entities, config, humidity, temperature, batteryLevel }}
       >
         {props.children}
       </HomeAssistantContext>

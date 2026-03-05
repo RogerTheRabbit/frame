@@ -5,6 +5,7 @@ import HomeAssistantContextProvider from "./components/home-assistant/home-assis
 import { ThemeProvider } from "./components/theme-provider";
 import Weather from "./components/weather/weather";
 import { WhoseHome } from "./components/whosehome";
+import BatteryAlert from "./components/home-assistant/battery-alert";
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
       </Container>
       <HomeAssistantContextProvider>
         <HomeAssistant />
+        <BatteryAlert />
       </HomeAssistantContextProvider>
     </ThemeProvider>
   );

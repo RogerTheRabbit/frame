@@ -4,5 +4,6 @@
     "light.my_light_entitiy2"
   ],
   "temperature_sensor": "sensor.temperature",
-  "humidity_sensor": "sensor.humidity"
+  "humidity_sensor": "sensor.humidity",
+  "phone_battery_level": "sensor.device_battery_level",
 }
