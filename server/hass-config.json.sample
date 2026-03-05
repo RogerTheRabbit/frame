@@ -5,5 +5,5 @@
   ],
   "temperature_sensor": "sensor.temperature",
   "humidity_sensor": "sensor.humidity",
-  "phone_battery_level": "sensor.device_battery_level",
+  "phone_battery_level": "sensor.device_battery_level"
 }
