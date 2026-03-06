@@ -18,6 +18,7 @@ type HassConfig = {
   humidity_sensor: string;
   phone_battery_level: string;
   presence_sensor: string;
+  sleeping: string;
 };
 
 type HassContext = {
@@ -28,6 +29,7 @@ type HassContext = {
   temperature: StatisticChartValue[];
   batteryLevel: number | undefined;
   present: boolean | null;
+  sleeping: boolean;
 };
 
 type StatisticChartValue = {
@@ -52,6 +54,7 @@ export default function HomeAssistantContextProvider(props: Props) {
     undefined,
   );
   const [present, setPresent] = useState<boolean | null>(null);
+  const [sleeping, setSleeping] = useState<boolean>(false);
 
   useEffect(() => {
     getAuth({
@@ -145,6 +148,7 @@ export default function HomeAssistantContextProvider(props: Props) {
             parseInt(updatedEntities[config.phone_battery_level]),
           );
           setPresent(updatedEntities[config.presence_sensor] === "on");
+          setSleeping(updatedEntities[config.sleeping] === "on");
         }
         // Presumably 'c' for 'change'
         else if (msg["c"]) {
@@ -164,6 +168,9 @@ export default function HomeAssistantContextProvider(props: Props) {
           if (updatedEntities[config.presence_sensor]) {
             setPresent(updatedEntities[config.presence_sensor] === "on");
           }
+          if (updatedEntities[config.sleeping]) {
+            setSleeping(updatedEntities[config.sleeping] === "on");
+          }
         }
       },
       {
@@ -175,6 +182,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           config.temperature_sensor,
           config.phone_battery_level,
           config.presence_sensor,
+          config.sleeping,
         ],
       },
     );
@@ -196,6 +204,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           temperature,
           batteryLevel,
           present,
+          sleeping,
         }}
       >
         {props.children}
