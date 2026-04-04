@@ -16,6 +16,7 @@ type HassConfig = {
   light_entities: string[];
   temperature_sensor: string;
   humidity_sensor: string;
+  co2_sensor: string;
   phone_battery_level: string;
   presence_sensor: string;
   sleeping: string;
@@ -27,6 +28,7 @@ type HassContext = {
   config: HassConfig | null;
   humidity: StatisticChartValue[];
   temperature: StatisticChartValue[];
+  co2: StatisticChartValue[];
   batteryLevel: number | undefined;
   present: boolean | null;
   sleeping: boolean;
@@ -50,6 +52,7 @@ export default function HomeAssistantContextProvider(props: Props) {
   const [config, setConfig] = useState<HassConfig | null>(null);
   const [humidity, setHumidity] = useState<StatisticChartValue[]>([]);
   const [temperature, setTemperature] = useState<StatisticChartValue[]>([]);
+  const [co2, setCo2] = useState<StatisticChartValue[]>([]);
   const [batteryLevel, setBatteryLevel] = useState<number | undefined>(
     undefined,
   );
@@ -104,7 +107,11 @@ export default function HomeAssistantContextProvider(props: Props) {
           new Date().getTime() - 60 * 60 * 24000,
         ).toISOString(),
         end_time: new Date().toISOString(),
-        statistic_ids: [config?.humidity_sensor, config?.temperature_sensor],
+        statistic_ids: [
+          config?.humidity_sensor,
+          config?.temperature_sensor,
+          config?.co2_sensor,
+        ],
         period: "hour",
       })
         .then((val: any) => {
@@ -118,6 +125,14 @@ export default function HomeAssistantContextProvider(props: Props) {
           );
           setTemperature(
             val[config?.temperature_sensor].map((val2: StatisticChartValue) => {
+              return {
+                mean: val2.mean,
+                start: val2.start,
+              };
+            }),
+          );
+          setCo2(
+            val[config?.co2_sensor].map((val2: StatisticChartValue) => {
               return {
                 mean: val2.mean,
                 start: val2.start,
@@ -180,6 +195,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           ...config.light_entities,
           config.humidity_sensor,
           config.temperature_sensor,
+          config.co2_sensor,
           config.phone_battery_level,
           config.presence_sensor,
           config.sleeping,
@@ -205,6 +221,7 @@ export default function HomeAssistantContextProvider(props: Props) {
           batteryLevel,
           present,
           sleeping,
+          co2,
         }}
       >
         {props.children}

@@ -24,6 +24,12 @@ export default function HomeAssistant() {
       Number.MAX_SAFE_INTEGER,
     ) || 0;
 
+  const co2Min =
+    hassContext?.co2?.reduce(
+      (cum, cur) => Math.min(cum, cur.mean),
+      Number.MAX_SAFE_INTEGER,
+    ) || 0;
+
   return (
     <>
       <div className="absolute top-0 right-0 p-3">
@@ -141,6 +147,51 @@ export default function HomeAssistant() {
                   ),
                 )}
               °
+            </text>
+          </AreaChart>
+        </ChartContainer>
+        <ChartContainer config={chartConfig} className="w-66 h-20">
+          <AreaChart
+            data={hassContext?.co2?.map((val) => ({
+              ...val,
+              mean: val.mean - co2Min + 2,
+            }))}
+          >
+            <defs>
+              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#2563eb" stopOpacity={0.1} />
+              </linearGradient>
+            </defs>
+            <Area
+              dataKey="mean"
+              yAxisId="co2"
+              type="natural"
+              fill="url(#fillDesktop)"
+              stroke="#2563eb"
+              strokeWidth={3}
+              stackId="a"
+            />
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{
+                fontSize: 40,
+                fontWeight: 600,
+                fill: "currentColor",
+              }}
+            >
+              {hassContext?.entities &&
+                Math.round(
+                  parseFloat(
+                    hassContext?.entities[
+                      hassContext?.config?.co2_sensor || ""
+                    ],
+                  ),
+                )}{" "}
+              ppm
             </text>
           </AreaChart>
         </ChartContainer>

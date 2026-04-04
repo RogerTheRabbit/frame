@@ -5,6 +5,7 @@
   ],
   "temperature_sensor": "sensor.temperature",
   "humidity_sensor": "sensor.humidity",
+  "co2_sensor": "sensor.co2_sensor",
   "phone_battery_level": "sensor.device_battery_level",
   "presence_sensor": "binary_sensor.device_radar_target",
   "sleeping": "input_boolean.sleeping"
