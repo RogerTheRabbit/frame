@@ -148,7 +148,7 @@ export default function HomeAssistantContextProvider(props: Props) {
     refreshStats();
     let refreshStatsInterval = setInterval(() => {
       refreshStats();
-    }, 900000);
+    }, 60000);
 
     let unsubscribe = ws.subscribeMessage(
       (msg: any) => {
