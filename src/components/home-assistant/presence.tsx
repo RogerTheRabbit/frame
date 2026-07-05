@@ -10,7 +10,7 @@ export default function Presence() {
     />
   ) : (
     <div
-      className={`absolute top-0 w-full h-full -z-100 ${hassContext?.sleeping ? "bg-purple-500" : "bg-red-500"}`}
+      className={`absolute top-0 w-full h-full -z-100 ${hassContext?.sleeping ? "bg-purple-300" : "bg-red-300"}`}
     />
   );
 }

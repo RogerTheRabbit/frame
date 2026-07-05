@@ -99,7 +99,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-muted-foreground/50"
+              className="text-muted-foreground/50 stroke-neutral-400"
               style={{ fontSize: 40, fontWeight: 600, fill: "currentColor" }}
             >
               {hassContext?.entities &&
@@ -149,7 +149,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-muted-foreground/50"
+              className="text-muted-foreground/50 stroke-neutral-400"
               style={{
                 fontSize: 40,
                 fontWeight: 600,
@@ -203,7 +203,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-muted-foreground/50"
+              className="text-muted-foreground/50 stroke-neutral-400"
               style={{
                 fontSize: 40,
                 fontWeight: 600,
