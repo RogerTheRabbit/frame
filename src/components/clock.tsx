@@ -43,7 +43,7 @@ export function Clock() {
       <h1 className="m-1 text-8xl font-bold tracking-tight text-balance">
         {time}
       </h1>
-      <h3 className="text-5xl text-neutral-400 font-bold tracking-tight text-balance">
+      <h3 className="text-5xl text-muted-foreground font-bold tracking-tight text-balance">
         {date}
       </h3>
     </div>

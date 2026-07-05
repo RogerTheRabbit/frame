@@ -63,7 +63,7 @@ export default function HomeAssistant() {
             );
           })}
       </div>
-      <div className="absolute top-0 left-0 p-3 flex">
+      <div className="absolute bottom-0 p-1 flex w-full justify-center">
         <ChartContainer config={chartConfig} className="w-66 h-20">
           <AreaChart
             data={hassContext?.humidity?.map((val) => ({
@@ -73,8 +73,16 @@ export default function HomeAssistant() {
           >
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#2563eb" stopOpacity={0.0} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.0}
+                />
               </linearGradient>
             </defs>
             <Area
@@ -82,7 +90,7 @@ export default function HomeAssistant() {
               yAxisId="humidity"
               type="natural"
               fill="url(#fillDesktop)"
-              stroke="#2563eb"
+              stroke="var(--muted-foreground)"
               strokeWidth={3}
               stackId="a"
             />
@@ -91,6 +99,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
+              className="text-muted-foreground/50"
               style={{ fontSize: 40, fontWeight: 600, fill: "currentColor" }}
             >
               {hassContext?.entities &&
@@ -114,8 +123,16 @@ export default function HomeAssistant() {
           >
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#2563eb" stopOpacity={0.1} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.1}
+                />
               </linearGradient>
             </defs>
             <Area
@@ -123,7 +140,7 @@ export default function HomeAssistant() {
               yAxisId="temperature"
               type="natural"
               fill="url(#fillDesktop)"
-              stroke="#2563eb"
+              stroke="var(--muted-foreground)"
               strokeWidth={3}
               stackId="a"
             />
@@ -132,6 +149,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
+              className="text-muted-foreground/50"
               style={{
                 fontSize: 40,
                 fontWeight: 600,
@@ -159,8 +177,16 @@ export default function HomeAssistant() {
           >
             <defs>
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#2563eb" stopOpacity={0.1} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--muted-foreground)"
+                  stopOpacity={0.1}
+                />
               </linearGradient>
             </defs>
             <Area
@@ -168,7 +194,7 @@ export default function HomeAssistant() {
               yAxisId="co2"
               type="natural"
               fill="url(#fillDesktop)"
-              stroke="#2563eb"
+              stroke="var(--muted-foreground)"
               strokeWidth={3}
               stackId="a"
             />
@@ -177,6 +203,7 @@ export default function HomeAssistant() {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
+              className="text-muted-foreground/50"
               style={{
                 fontSize: 40,
                 fontWeight: 600,
