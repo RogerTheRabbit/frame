@@ -7,6 +7,7 @@ import Weather from "./components/weather/weather";
 import { WhoseHome } from "./components/whosehome";
 import BatteryAlert from "./components/home-assistant/battery-alert";
 import Presence from "./components/home-assistant/presence";
+import AdminButton from "./components/admin/admin-button";
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
         <BatteryAlert />
         <Presence />
       </HomeAssistantContextProvider>
+      <AdminButton />
     </ThemeProvider>
   );
 }
