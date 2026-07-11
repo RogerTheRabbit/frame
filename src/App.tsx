@@ -7,11 +7,13 @@ import { WhoseHome } from "./components/whosehome";
 import BatteryAlert from "./components/home-assistant/battery-alert";
 import Presence from "./components/home-assistant/presence";
 import AdminButton from "./components/admin/admin-button";
+import Photos from "./components/photos/photos";
 
 export function App() {
   return (
     <>
       <Container>
+        <Photos />
         <div className="m-10">
           <Clock />
           <WhoseHome />
