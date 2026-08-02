@@ -43,7 +43,7 @@ function Photos() {
     searchAssets();
     const interval = setInterval(() => {
       searchAssets();
-    }, 60000);
+    }, 3600000);
     return () => {
       clearInterval(interval);
     };
