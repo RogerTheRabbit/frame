@@ -14,7 +14,7 @@ export function WhoseHome() {
     let results: User[];
     try {
       const resultsResp = await fetch(
-        `${import.meta.env.VITE_WHOS_HOME_BASE_URL || ""}/whoshome/all`,
+        `${import.meta.env.VITE_WHOS_HOME_BASE_URL || ""}/all`,
       );
       results = await resultsResp.json();
     } catch (err) {
