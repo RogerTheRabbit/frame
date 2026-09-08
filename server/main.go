@@ -30,7 +30,6 @@ func main() {
 
 	router.GET("/enable", getEnableScreen)
 	router.GET("/disable", getDisableScreen)
-	router.GET("/restart", getRestartFrame)
 
 	api := router.Group("/api")
 	{
@@ -58,20 +57,6 @@ func getEnableScreen(c *gin.Context) {
 
 func getDisableScreen(c *gin.Context) {
 	cmd := exec.Command("sway", "output", "\"HDMI-A-1\"", "disable")
-
-	err := cmd.Run()
-
-	if err != nil {
-		log.Println(err)
-		c.Status(http.StatusInternalServerError)
-		return
-	}
-
-	c.Status(http.StatusOK)
-}
-
-func getRestartFrame(c *gin.Context) {
-	cmd := exec.Command("doas", "/sbin/poweroff")
 
 	err := cmd.Run()
 
